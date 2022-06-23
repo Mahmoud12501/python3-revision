@@ -1,3 +1,5 @@
+
+
 def next_edge(side1,side2):
 
     return (side1+side2)-1
@@ -28,3 +30,20 @@ def V_DAC(value):
     analog_voltage = (5*value)/1023
 
     return round(analog_voltage,2)
+ 
+#   Get Students with Names and Top Notes  
+def top_note(student):
+    
+    ls=student['notes']
+    ls.sort(reverse=True)
+
+    student['top_note']=ls[0]
+    del student['notes']
+    return student
+     
+     
+     
+# top_note({ "name": "John", "notes": [3, 5, 4] })
+
+
+print(top_note({ "name": "John", "notes": [3, 5, 4] }))
