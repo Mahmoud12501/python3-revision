@@ -42,8 +42,9 @@ def top_note(student):
     return student
      
      
-     
-# top_note({ "name": "John", "notes": [3, 5, 4] })
+# Get the Area of a Country
+# The total world's landmass is 148,940,000 [Km^2]
+def area_of_country(name, area):
+    areaprsentage=(area/ 148940000)*100
+    return f"{name} is {areaprsentage:.2f}% of the total world's landmass"
 
-
-print(top_note({ "name": "John", "notes": [3, 5, 4] }))
