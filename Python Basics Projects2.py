@@ -1,4 +1,6 @@
 import datetime
+import string
+import random
 
 # Build a countdown calculator. Write some code that can take two dates as input,
 # and then calculate the amount of time between them
@@ -29,7 +31,7 @@ def email_slicer():
 
 # convert Fahrenheit to Celcius
 def convert_Fahrenheit_to_Celcius(f):
-  return round((f-32)/1.8000,5)
+  return f"{round((f-32)/1.8000,5)} celsius"
 
 
 def currency_converter():
@@ -47,18 +49,59 @@ def currency_converter():
         print(f"{amount} Real saudi  to Dollar ={amount*0.27:.3f}",f"{amount} Real saudi   to Eg pound ={amount*5.01:.3f}",sep='\n')
 
 
+def generate_password(len_pass,no_uper,no_spcial,no_digt):
+    #char form
+    pass_char=list(string.ascii_uppercase)
+    pass_digt=list(string.digits)
+    pass_spcial=list("!@#$%^&*()_+?" )
+    characters = list(string.ascii_letters + string.digits + "!@#$%^&*()")
 
+    #random characters
+    random.shuffle(pass_char)
+    random.shuffle(pass_digt)
+    random.shuffle(pass_spcial)
+    
+    # Calculating the number of charters that user want to be in password
+    # check the total length with characters sum count
+    characters_count=no_digt+no_spcial+no_uper
+    if characters_count >len_pass:
+        print("Characters total count is greater than the password length -_-")
+    else:
+        password=[]
+        for c in range(no_uper):
+            password.append(random.choice(pass_char))
+        
+        for c in range(no_spcial):
+            password.append(random.choice(pass_spcial))
+        
+        for c in range(no_digt):
+            password.append(random.choice(pass_digt))
+
+        # if the total characters count is less than the password length
+	    # add random characters to make it equal to the length
+        if characters_count<len_pass:
+            for c in range(len_pass-characters_count):
+             password.append(random.choice(characters))
+
+        random.shuffle(password)
+        print(f"password: {''.join(password)}")
+        
+        
 
 def main():
     # choice=input('enter choise:')
     # if
-    print(convert_Fahrenheit_to_Celcius(1))
+    degree=int(input("enter degree fahrenheit: "))
+    print(convert_Fahrenheit_to_Celcius(degree))
+    print(12*"-")
     countdown_calculator()
+    print(12*"-")
     print(email_slicer())
+    print(12*"-")
     currency_converter()
-
-
-
+    print(12*"-")
+    generate_password(7,1,1,4)
 
 if __name__=='__main__':
     main()
+
