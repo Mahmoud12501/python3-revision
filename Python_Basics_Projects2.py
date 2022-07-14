@@ -1,6 +1,9 @@
 import datetime
 import string
 import random
+from win10toast import ToastNotifier
+import schedule
+import time
 
 # Build a countdown calculator. Write some code that can take two dates as input,
 # and then calculate the amount of time between them
@@ -86,7 +89,34 @@ def generate_password(len_pass,no_uper,no_spcial,no_digt):
         random.shuffle(password)
         print(f"password: {''.join(password)}")
         
+def to_dolist():
+    global remander_list
+    remander_list={}
+    number_task=int(input("how mant task do you want to record: "))
+    for i in range(number_task):
+        task_time=input(f"entert task{i} time: ").split(":")
+        task_name=input(f"task{i} name: ").title
         
+        h,m=map(int,task_time)
+        task_time=datetime.time(h,m)
+       
+        remander_list[task_time]=task_name  
+    print(remander_list)     
+    
+def rmander():  
+    notvication=ToastNotifier() 
+    for not_time , task in remander_list.items():
+        if not_time==datetime.datetime.now().time():
+             print("yes")
+             notvication.show_toast(
+            task,
+            f"Time of {task}",
+            icon_path=None,
+            duration=10,
+            threaded=True)
+        else:
+            print("no")
+            
 
 def main():
     # choice=input('enter choise:')
@@ -101,7 +131,20 @@ def main():
     currency_converter()
     print(12*"-")
     generate_password(7,1,1,4)
+    to_dolist()
+    ######
 
-if __name__=='__main__':
-    main()
+    #######
 
+
+# if __name__=='__main__':
+#     main()
+ 
+to_dolist()
+schedule.every(1).seconds.do(rmander)
+while True:
+ 
+    # Checks whether a scheduled task
+    # is pending to run or not
+    schedule.run_pending()
+    time.sleep(1)
