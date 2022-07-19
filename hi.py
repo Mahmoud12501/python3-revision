@@ -3,7 +3,10 @@ import schedule
 import time
 from win10toast import ToastNotifier
 
-# remander_dict={}
+
+
+
+remander_dict={}
 # def to_dolist():
     
     
@@ -17,7 +20,7 @@ from win10toast import ToastNotifier
 #         print(task_time)
 #         print(type(task_time))
 #         remander_dict[task_time]=task_name  
-#     print(remander_dict)     
+#         x=remander_dict[task_time]  
     
 # def rmander():  
 #     notvication=ToastNotifier() 
@@ -33,7 +36,6 @@ from win10toast import ToastNotifier
 #         else:
 #             print("no")
 
-# to_dolist()
 # schedule.every(1).seconds.do(rmander)
 # while True:
  
@@ -42,8 +44,47 @@ from win10toast import ToastNotifier
 #     schedule.run_pending()
 #     time.sleep(1)
 
-x=datetime.time(2,3)
-print(x)
-y="hi".title()
-dict1={y:x}
-print(dict1)
+
+all_reminder=[]
+def take_task():
+    number_task=int(input("how mant task do you want to record: "))
+    for i in range(number_task):
+        all_reminder.append([])
+
+        task_time=input(f"entert task{i+1} time: ").split(":")
+        task_name=input(f"task{i+1} name: ").title()
+            
+        h,m=map(int,task_time)
+        task_time=datetime.time(h,m)
+        for j in range(1):
+            all_reminder[i].append(task_time)
+            all_reminder[i].append(task_name)
+        
+def rmander():  
+    notvication=ToastNotifier() 
+    tim = time.localtime()
+
+    current_time = time.strftime("%H:%M:%S", tim)
+    for i in all_reminder:
+        # x=all_reminder[i][0]
+        # print(x)
+        if datetime.datetime.now().hour==datetime.datetime.now().hour:
+             print("yes")
+             notvication.show_toast(
+            all_reminder[i][1],
+            f"Time of { all_reminder[i][1]}",
+            icon_path=None,
+            duration=10,
+            threaded=True)
+        else:
+            print("no")
+
+take_task()
+schedule.every(1).seconds.do(rmander)
+while True:
+ 
+    # Checks whether a scheduled task
+    # is pending to run or not
+    schedule.run_pending()
+    time.sleep(1)
+
